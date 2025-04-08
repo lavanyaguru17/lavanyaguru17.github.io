@@ -40,79 +40,58 @@ window.addEventListener("scroll", () => {
   })
 })
 
-// // Form Submission
-// const contactForm = document.getElementById("contactForm")
 
+// // Initialize EmailJS
+// document.addEventListener("DOMContentLoaded", () => {
+//   emailjs.init("fLVlgJcogZyPuPpcm"); 
+// });
+// // Form Submission with EmailJS
+// const contactForm = document.getElementById("contactForm");
 // if (contactForm) {
 //   contactForm.addEventListener("submit", (e) => {
-//     e.preventDefault()
-
-//     // Get form values
-//     const name = document.getElementById("name").value
-//     const email = document.getElementById("email").value
-//     const subject = document.getElementById("subject").value
-//     const message = document.getElementById("message").value
-
-//     // Here you would typically send the form data to a server
-//     // For now, we'll just log it to the console and show an alert
-//     console.log({ name, email, subject, message })
-
-//     // Show success message
-//     alert("Thank you for your message! I will get back to you soon.")
-
-//     // Reset form
-//     contactForm.reset()
-//   })
+//       e.preventDefault();
+//       emailjs.sendForm("service_2jnodll", "template_cn1gb5n", contactForm) // Use actual Service ID & Template ID
+//           .then(response => {
+//               console.log("Email sent!", response);
+//               alert("Message sent successfully!");
+//               contactForm.reset();
+//           })
+//           .catch(error => {
+//               console.error("Error:", error);
+//               alert("Failed to send message. Please try again.");
+//           });
+//   });
 // }
 
-
-// Form Submission with EmailJS
-// const contactForm = document.getElementById("contactForm");
-
-// if (contactForm) {
-//     emailjs.init("fLVlgJcogZyPuPpcm"); // Replace with your EmailJS Public Key
-
-//     contactForm.addEventListener("submit", (e) => {
-//         e.preventDefault();
-
-//         emailjs.sendForm("service_2jnodll", "__ejs-test-mail-service__", contactForm)
-//             .then(response => {
-//                 console.log("Email sent!", response);
-//                 alert("Message sent successfully!");
-//                 contactForm.reset();
-//             })
-//             .catch(error => {
-//                 console.error("Error:", error);
-//                 alert("Failed to send message. Please try again.");
-//             });
-//     });
-// }
-
-
-// Initialize EmailJS
-document.addEventListener("DOMContentLoaded", () => {
-  emailjs.init("fLVlgJcogZyPuPpcm"); // Replace with your actual Public Key
-});
-
-// Form Submission with EmailJS
 const contactForm = document.getElementById("contactForm");
 
 if (contactForm) {
   contactForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      emailjs.sendForm("service_2jnodll", "__ejs-test-mail-service__", contactForm) // Use actual Service ID & Template ID
-          .then(response => {
-              console.log("Email sent!", response);
-              alert("Message sent successfully!");
-              contactForm.reset();
-          })
-          .catch(error => {
-              console.error("Error:", error);
-              alert("Failed to send message. Please try again.");
-          });
+    emailjs.sendForm("service_2jnodll", "template_cn1gb5n", contactForm)
+      .then(response => {
+        console.log("Email sent!", response);
+        Swal.fire({
+          icon: "success",
+          title: "Message Sent!",
+          text: "Thank you for reaching out. I'll get back to you soon.",
+          confirmButtonColor: "#3085d6"
+        });
+        contactForm.reset();
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong. Please try again later.",
+          confirmButtonColor: "#d33"
+        });
+      });
   });
 }
+
 
 
 // Scroll Reveal Animation
